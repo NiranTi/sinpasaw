@@ -100,3 +100,13 @@ Route::get('/tenant/export/pdf', [ExportController::class, 'exportPdf'])
 
 Route::get('/tenant/export/excel', [ExportController::class, 'exportExcel'])
     ->name('tenant.export.excel');
+
+Route::get('/db-check', function () {
+    try {
+        \DB::connection()->getPdo();
+        return 'Connected to: ' . \DB::connection()->getDatabaseName();
+    } catch (\Exception $e) {
+        return 'Connection failed: ' . $e->getMessage();
+    }
+});
+
