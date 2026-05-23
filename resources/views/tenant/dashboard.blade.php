@@ -1,6 +1,5 @@
-{{-- resources/views/tenant/beranda.blade.php --}}
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -97,7 +96,6 @@
         .kasbon-card {
             background: #ffffff;
             border-radius: 12px;
-            border: 1px solid #eef0ef;
             padding: 1rem 1.1rem;
         }
 
@@ -362,7 +360,7 @@
                         </svg>
                     </div>
                 {{-- RESPONSIVE: tampil desktop --}}
-                <a href="{{ route('tenant.kasbon') }}"
+                <a href="#section-kasbon"
                 class="hidden lg:flex text-[0.6rem] font-medium items-center gap-1 shrink-0"
                 style="color:var(--orange);">
                     Selengkapnya
@@ -377,7 +375,7 @@
                 </p>
                 {{-- Link Selengkapnya --}}
                 {{-- RESPONSIVE: tampil mobile --}}
-                <a href="{{ route('tenant.kasbon') }}"
+                <a href="#section-kasbon"
                 class="flex justify-end pt-2 lg:hidden items-center gap-0.5 mt-1.5 text-[0.6rem] font-medium"
                 style="color:var(--orange);">
                     Selengkapnya
@@ -826,7 +824,7 @@
              Mobile: 1 kolom penuh
              Desktop: 2 kolom
              ══════════════════════════════════════════════════════ --}}
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5" id="section-kasbon">
 
             {{-- Kasbon Pelanggan ── --}}
             <div>
@@ -848,7 +846,7 @@
                                     {{ $kb->is_lunas ? 'LUNAS' : 'BELUM LUNAS' }}
                                 </p>
                             </div>
-                            <div class="flex-shrink-0 text-right">
+                            <div class="shrink-0 text-right">
                                 <p class="text-[10px] text-gray-400 mb-1.5 whitespace-nowrap">
                                     {{ $kb->created_at->format('H:i') }} WIB – {{ $kb->created_at->translatedFormat('d M Y') }}
                                 </p>

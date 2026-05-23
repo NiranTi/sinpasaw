@@ -50,6 +50,9 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 // DASHBOARD TENANT
 use App\Http\Controllers\Tenant\DashboardController;
+use App\Http\Controllers\Tenant\KasirController;
+use App\Http\Controllers\Tenant\StokController;
+use App\Http\Controllers\Tenant\PengaturanController;
 
 Route::redirect('/tenant', '/tenant/dashboard');
 
@@ -61,11 +64,20 @@ Route::prefix('tenant')->name('tenant.')->middleware(['auth', 'verified'])->grou
     // Lunasi kasbon (dari beranda)
     Route::patch('/kasbon/{kasbon}/lunasi', [DashboardController::class, 'lunasiKasbon'])->name('kasbon.lunasi');
 
-    // --- Placeholder routes (buat controller-nya nanti) ---
-    Route::get('/kasir',      fn() => view('tenant.kasir'))->name('kasir');
-    Route::get('/stok',       fn() => view('tenant.stok'))->name('stok');
-    Route::get('/kasbon',       fn() => view('tenant.kasbon'))->name('kasbon');
-    Route::get('/pengaturan', fn() => view('tenant.pengaturan'))->name('pengaturan');
+    // ── Kasir Digital ─────────────────────────────────────────────────
+    Route::get('/kasir',  [KasirController::class, 'index'])->name('kasir');
+    Route::post('/kasir', [KasirController::class, 'store'])->name('kasir.store');
+
+    // ── Manajemen Stok ────────────────────────────────────────────────
+    Route::get('/stok',               [StokController::class, 'index'])  ->name('stok');
+    Route::post('/stok',              [StokController::class, 'store'])  ->name('stok.store');
+    Route::post('/stok/restock',      [StokController::class, 'restock'])->name('stok.restock');
+    Route::delete('/stok/{barang}',   [StokController::class, 'destroy'])->name('stok.destroy');
+
+    // ── Pengaturan Akun ───────────────────────────────────────────────
+    Route::get('/pengaturan',          [PengaturanController::class, 'index'])         ->name('pengaturan');
+    Route::put('/pengaturan/profil',   [PengaturanController::class, 'updateProfil'])  ->name('pengaturan.profil');
+    Route::put('/pengaturan/password', [PengaturanController::class, 'updatePassword'])->name('pengaturan.password');
 });
 
 // DASHBOARD ADMIN
@@ -100,13 +112,3 @@ Route::get('/tenant/export/pdf', [ExportController::class, 'exportPdf'])
 
 Route::get('/tenant/export/excel', [ExportController::class, 'exportExcel'])
     ->name('tenant.export.excel');
-
-Route::get('/db-check', function () {
-    try {
-        \DB::connection()->getPdo();
-        return 'Connected to: ' . \DB::connection()->getDatabaseName();
-    } catch (\Exception $e) {
-        return 'Connection failed: ' . $e->getMessage();
-    }
-});
-

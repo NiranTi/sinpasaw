@@ -108,31 +108,25 @@ class DashboardController extends Controller
         // ── Kasbon Pelanggan ───────────────────────────────────────────
         $kasbonPelanggan = Kasbon::where('tenant_id', $tenantId)
             ->where('tipe_kasbon', 'pelanggan')
-            ->where('status', '!=', 'lunas')
+            ->orderBy('status')          // belum_lunas muncul duluan
             ->orderByDesc('created_at')
-            ->limit(3)
+            ->limit(5)
             ->get();
 
         // ── Kasbon Supplier ────────────────────────────────────────────
         $kasbonSupplier = Kasbon::where('tenant_id', $tenantId)
             ->where('tipe_kasbon', 'supplier')
-            ->where('status', '!=', 'lunas')
+            ->orderBy('status')
             ->orderByDesc('created_at')
-            ->limit(2)
+            ->limit(3)
             ->get();
 
         return view('tenant.dashboard', compact(
-            'tenant',
-            'periode',
-            'totalPenjualan',
-            'penjualanPersentase',
-            'totalKasbon',
-            'stokHabis',
-            'trenData',
-            'barangLaris',
-            'transaksi',
-            'kasbonPelanggan',
-            'kasbonSupplier',
+            'tenant', 'periode',
+            'totalPenjualan', 'penjualanPersentase',
+            'totalKasbon', 'stokHabis',
+            'trenData', 'barangLaris',
+            'transaksi', 'kasbonPelanggan', 'kasbonSupplier',
         ));
     }
 
@@ -235,15 +229,10 @@ class DashboardController extends Controller
     public function lunasiKasbon(Request $request, int $kasbonId)
     {
         $tenant = Auth::user()->tenant;
+        $kasbon = Kasbon::where('tenant_id', $tenant->tenant_id)->findOrFail($kasbonId);
+        $kasbon->update(['sisa' => 0, 'status' => 'lunas']);
 
-        $kasbon = Kasbon::where('tenant_id', $tenant->tenant_id)
-            ->findOrFail($kasbonId);
-
-        $kasbon->update([
-            'sisa'   => 0,
-            'status' => 'lunas',
-        ]);
-
-        return back()->with('success', 'Kasbon berhasil dilunasi.');
+        return back()->with('alert', 'Kasbon ' . $kasbon->nama . ' berhasil dilunasi!');
     }
 }
+
