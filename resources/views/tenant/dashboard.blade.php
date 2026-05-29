@@ -523,7 +523,9 @@
                                 onchange="this.form.submit()"
                                 class="appearance-none rounded-4xl bg-white pl-10 pr-9 py-2 text-xs font-medium text-zinc-700 focus:outline-1 focus:outline-[#007E43]"
                             >
-                                <option value="">Semua Status</option>
+                                <option value="" disabled {{ request('filter') ? '' : 'selected' }}>
+                                    Filter
+                                </option>
                                 <option value="selesai" {{ request('filter') == 'selesai' ? 'selected' : '' }}>
                                     Selesai
                                 </option>
@@ -571,6 +573,10 @@
                                 onchange="this.form.submit()"
                                 class="appearance-none rounded-4xl bg-white pl-10 pr-9 py-2 text-xs font-medium text-zinc-700 focus:outline-1 focus:outline-[#007E43]"
                             >
+                                <option value="" disabled {{ request('sort') ? '' : 'selected' }}>
+                                    Urutkan
+                                </option>
+
                                 <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>
                                     Terbaru
                                 </option>

@@ -18,12 +18,8 @@
 {{-- Supplier --}}
 <div class="form-group">
     <label class="form-label">SUPPLIER</label>
-    <select name="supplier_id" class="form-select">
-        <option value="">Pilih supplier...</option>
-        @foreach ($suppliers as $s)
-            <option value="{{ $s->supplier_id }}">{{ $s->nama_supplier }}</option>
-        @endforeach
-    </select>
+    <input type="text" name="supplier_id" placeholder="Pilih supplier..."
+    class="form-input" required>
 </div>
 
 {{-- Jumlah + Unit (2 kolom) --}}

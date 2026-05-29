@@ -139,17 +139,9 @@
             </div>
         </div>
 
-        {{-- ── Filter bar: sort + filter tabs ── --}}
-        <div class="section-card">
+        {{-- ── Filter bar ── --}}
+        <div class="section-card px-2 pb-2">
             <div class="flex flex-wrap items-center justify-between gap-3 p-4 pb-0">
-
-                {{-- Sort button --}}
-                <button class="btn-outline" style="font-size:12px;padding:6px 14px;">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
-                    </svg>
-                    Urutkan
-                </button>
 
                 {{-- Filter tabs (pill style, same as beranda periode toggle) --}}
                 <div class="tab-wrap overflow-x-auto">
@@ -163,7 +155,7 @@
             </div>
 
             {{-- ── Tabel stok ── --}}
-            <div class="overflow-x-auto mt-3">
+            <div class="overflow-x-auto mt-3 bg-white rounded-2xl">
                 <table class="stok-table w-full">
                     <thead>
                         <tr class="border-b border-gray-100">
@@ -223,7 +215,6 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
 
             {{-- Pagination ── --}}
             <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-4 border-t border-gray-100">
@@ -255,6 +246,7 @@
                         <span class="px-2.5 py-1.5 rounded-lg text-xs text-gray-300">›</span>
                     @endif
                 </div>
+            </div>
             </div>
         </div>{{-- /section-card --}}
     </div>{{-- /right column --}}

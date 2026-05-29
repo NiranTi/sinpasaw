@@ -98,14 +98,14 @@
 
 {{-- Search bar --}}
 <div class="mb-5">
-    <form method="GET" action="{{ route('tenant.kasir') }}" class="search-wrap max-w-lg">
+    <div class="search-wrap max-w-lg">
         <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
         </svg>
-        <input type="text" name="q" value="{{ request('q') }}"
+        <input id="searchInput" type="text" name="q" value="{{ request('q') }}"
                placeholder="Cari produk ..." class="search-input" autocomplete="off">
         <button type="submit" class="btn-primary" style="font-size:13px;padding:9px 20px;">Cari</button>
-    </form>
+    </div>
 </div>
 
 {{-- ═══════════════════════════════════════════════════════
@@ -121,6 +121,7 @@
         @forelse ($barang as $b)
             <div class="product-card"
                  data-id="{{ $b->barang_id }}"
+                 data-search="{{ strtolower($b->nama) }}"
                  data-nama="{{ addslashes($b->nama) }}"
                  data-harga="{{ $b->harga_jual }}">
 
@@ -352,6 +353,23 @@
 
 @section('scripts')
 <script>
+document.getElementById('searchInput').addEventListener('input', function () {
+
+    const keyword = this.value.toLowerCase().trim();
+
+    document.querySelectorAll('.product-card').forEach(card => {
+
+        const nama = card.dataset.search;
+
+        if (nama.includes(keyword)) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+
+    });
+
+});
 /* ── Cart state ──────────────────────────────────────────── */
 const cart = {};
 let   metode = 'tunai';

@@ -50,7 +50,7 @@ class DashboardController extends Controller
 
         // ── Stok Habis ─────────────────────────────────────────────────
         $stokHabis = Barang::where('tenant_id', $tenantId)
-            ->where('stok', '<=', 5)
+            ->where('stok', '<', 1)
             ->count();
 
         // ── Tren Pendapatan (7 hari terakhir) ─────────────────────────
